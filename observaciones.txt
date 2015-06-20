@@ -1,0 +1,6 @@
+OBSERVACIONES CASOS DE USO Y REQUERIMIENTOS:
+--------------------------------------------------
+- No necesariamente hay un requerimiento no funcional por cada funcional
+- Los dos ultimos grupos de requerimientos de software y demás que has puesto entran en la categoria de requerimientos no funcionales
+- Faltan los casos de uso (será penalizado)
+NO TE QUEDES!
