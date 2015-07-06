@@ -1,6 +1,11 @@
 OBSERVACIONES CASOS DE USO Y REQUERIMIENTOS:
 --------------------------------------------------
 - No necesariamente hay un requerimiento no funcional por cada funcional
-- Los dos ultimos grupos de requerimientos de software y dem·s que has puesto entran en la categoria de requerimientos no funcionales
-- Faltan los casos de uso (ser· penalizado)
+- Los dos ultimos grupos de requerimientos de software y dem√°s que has puesto entran en la categoria de requerimientos no funcionales
+- Faltan los casos de uso (ser√° penalizado)
 NO TE QUEDES!
+
+OBSERVACIONES SEGUNDO AVANCE
+----------------------------------------------
+- No has hecho merge del pull-request que te he enviado
+- No puedo ver nada del avance hasta ahora
