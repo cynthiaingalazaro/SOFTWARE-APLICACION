@@ -28,30 +28,41 @@ public class MapsActivity extends FragmentActivity {
 
     private Marker marker;//cariable para controlar el marcador
 
-    MyLocationServiceListener servicio;
+    private SMSReceiver smsReceiver;
+    private LatLng latLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        smsReceiver = new SMSReceiver();
+        //smsReceiver.setMapActivity(this);
+        SMSReceiver.MAPS_ACTIVITY= this;
 
         //Agrego un marcador
         //addMarker(mMap.getMyLocation());
-
-        //
-        servicio = new MyLocationServiceListener(getApplicationContext());
-        addMarker(servicio.getLocation());
+        setShowLocation(mMap.getMyLocation());
     }
 
+    public void setShowLocation(Location loc){
+        if(loc == null){
+            new LatLng(0, 0);
+            addMarker(null);
+        }else{
+            latLng = new LatLng(loc.getLatitude(), loc.getLongitude());
+            SMSReceiver.LATLON = new LatLng(loc.getLatitude(), loc.getLongitude());
+            addMarker(new LatLng(loc.getLatitude(), loc.getLongitude()));
+        }
+    }
     // Metodo para agregar un marcador
-    public void addMarker(Location loc){
-        LatLng position = new LatLng( 0, 0);
+    public void addMarker(LatLng position){
+
         String title ="Persona espiada";
         String info ="Ubicacion de la persona espiada";
         float color = BitmapDescriptorFactory.HUE_CYAN;
         int zoom = 14;
-        if(loc == null){//mejor mostrar ultima ubicacion conocida
+        if(position == null){//mejor mostrar ultima ubicacion conocida
             Toast.makeText(this," loc: es null", Toast.LENGTH_SHORT).show();
             position =  new LatLng( 0, 0);
             title = "ES UN NINJA";
@@ -59,11 +70,7 @@ public class MapsActivity extends FragmentActivity {
             color = BitmapDescriptorFactory.HUE_RED;
             zoom = 1;
             //return;
-        }else{
-            position = new LatLng(loc.getLatitude(), loc.getLongitude());
         }
-
-
         if(marker != null){
             marker.remove();
         }
@@ -98,14 +105,13 @@ public class MapsActivity extends FragmentActivity {
         switch(item.getItemId()){
             case R.id.MenuOption1:
                 //Enviar mensaje al otro celular
-                sendSMS("+931022193","oe ¿On tas?");
+                smsReceiver.sendSMS("+51969637038", SMSReceiver.SMS_SEND_ASK, this);
 
                 return true;
             case R.id.MenuOption2:
-                Toast.makeText(MapsActivity.this, "Unicandome..", Toast.LENGTH_LONG);
+                Toast.makeText(MapsActivity.this, "Ubicandome..", Toast.LENGTH_LONG);
                 //addMarker(mMap.getMyLocation());
-                addMarker(servicio.getLocation());
-
+                setShowLocation(mMap.getMyLocation());
                 return true;
             case R.id.MenuOption3:
                 Toast.makeText(MapsActivity.this, "Opcion 3", Toast.LENGTH_LONG).show();
@@ -116,15 +122,6 @@ public class MapsActivity extends FragmentActivity {
 
         }
     }
-
-    //Send SMS
-    //Metodo apra enviar mensajes a otro dispositivo
-    private void sendSMS(String phoneNumber, String message){
-        Toast.makeText(MapsActivity.this, "Enviando mensaje...\n ¿On tas?", Toast.LENGTH_SHORT).show();
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
-    }
-
 
     // Others methods
     @Override
